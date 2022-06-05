@@ -71,8 +71,8 @@ describe("get", function () {
 
       const transaction = await createMintTransaction(
         connection,
-        payer,
-        mint,
+        payer.publicKey,
+        mint.publicKey,
         candyMachine.publicKey
       );
 
@@ -95,8 +95,8 @@ describe("get", function () {
 
       const transaction = await createMintTransaction(
         connection,
-        payer,
-        mint,
+        payer.publicKey,
+        mint.publicKey,
         candyMachine.publicKey
       );
 

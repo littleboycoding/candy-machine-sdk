@@ -78,8 +78,8 @@ describe("instructions", function () {
 
       const transaction = await createMintTransaction(
         connection,
-        buyer,
-        mint,
+        buyer.publicKey,
+        mint.publicKey,
         candyMachine.publicKey,
       );
 

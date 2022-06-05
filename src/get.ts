@@ -11,7 +11,7 @@ import {
   CONFIG_LINE_SIZE_V2,
   MAX_NAME_LENGTH,
 } from "./constants";
-import { CandyMachine } from "@metaplex-foundation/mpl-candy-machine";
+import { CandyMachine, ConfigLine } from "@metaplex-foundation/mpl-candy-machine";
 
 /**
  * @private
@@ -37,14 +37,6 @@ function parseConfigLine(configLines: Buffer, start: number = 0): Item[] {
   });
 
   return splittedItems;
-}
-
-/**
- * @description Candy machine item config
- */
-interface ConfigLine {
-  name: string;
-  uri: string;
 }
 
 type Item = ConfigLine & { metadata?: Metadata };

@@ -13,9 +13,7 @@ import {
   SystemProgram,
   SYSVAR_INSTRUCTIONS_PUBKEY,
   SYSVAR_CLOCK_PUBKEY,
-  sendAndConfirmTransaction,
   Transaction,
-  Signer,
   SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
   TransactionBlockhashCtor,
 } from "@solana/web3.js";
@@ -56,8 +54,8 @@ import {
  */
 async function createMintTransaction(
   connection: Connection,
-  payer: Signer,
-  mint: Signer,
+  payer: PublicKey,
+  mint: PublicKey,
   candyMachine: PublicKey,
   transactionOpt?: TransactionBlockhashCtor
 ) {
@@ -71,11 +69,11 @@ async function createMintTransaction(
     candyMachine
   );
   const associatedToken = await getAssociatedTokenAddress(
-    mint.publicKey,
-    payer.publicKey
+    mint,
+    payer
   );
-  const [metadata] = await getMetadata(mint.publicKey);
-  const [masterEdition] = await getMasterEdition(mint.publicKey);
+  const [metadata] = await getMetadata(mint);
+  const [masterEdition] = await getMasterEdition(mint);
 
   // Create mint account
   transaction.add(
@@ -83,46 +81,46 @@ async function createMintTransaction(
       space: MINT_SIZE,
       lamports: await getMinimumBalanceForRentExemptMint(connection),
       programId: TOKEN_PROGRAM_ID,
-      fromPubkey: payer.publicKey,
-      newAccountPubkey: mint.publicKey,
+      fromPubkey: payer,
+      newAccountPubkey: mint,
     })
   );
 
   // Initialize mint account
   transaction.add(
     createInitializeMintInstruction(
-      mint.publicKey,
+      mint,
       0,
-      payer.publicKey,
-      payer.publicKey
+      payer,
+      payer
     )
   );
 
   // Create associated token account
   transaction.add(
     createAssociatedTokenAccountInstruction(
-      payer.publicKey,
+      payer,
       associatedToken,
-      payer.publicKey,
-      mint.publicKey
+      payer,
+      mint
     )
   );
 
   // Minting
   transaction.add(
-    createMintToInstruction(mint.publicKey, associatedToken, payer.publicKey, 1)
+    createMintToInstruction(mint, associatedToken, payer, 1)
   );
 
   // Mint NFT from candy machine
   transaction.add(
     createMintNftInstruction(
       {
-        payer: payer.publicKey,
-        mint: mint.publicKey,
+        payer: payer,
+        mint: mint,
         metadata: metadata,
         candyMachine: candyMachine,
-        mintAuthority: payer.publicKey,
-        updateAuthority: payer.publicKey,
+        mintAuthority: payer,
+        updateAuthority: payer,
         candyMachineCreator: creator,
         wallet: wallet,
         masterEdition: masterEdition,
@@ -160,7 +158,7 @@ async function createMintTransaction(
       createSetCollectionDuringMintInstruction({
         candyMachine: candyMachine,
         metadata: metadata,
-        payer: payer.publicKey,
+        payer: payer,
         authority: authority,
         collectionPda: collectionPDA,
         collectionMint: collectionMint,
