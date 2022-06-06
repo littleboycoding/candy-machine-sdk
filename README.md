@@ -16,8 +16,7 @@ $ npm i candy-machine-sdk
 ## Examples 📚
 
 ```typescript
-import { createMintTransaction } from "candy-machine-sdk/transactions";
-import { getMinted, getAll, getUnminted } from "candy-machine-sdk/get";
+import { createMintTransaction, getMinted, getAll } from "candy-machine-sdk";
 
 // Minting
 const transaction = await createMintTransaction(
@@ -30,7 +29,6 @@ const transaction = await createMintTransaction(
 // Get list of token
 const allItems = await getAll(connection, CANDY_MACHINE_PUBLICKEY);
 const mintedItems = await getMinted(connection, CANDY_MACHINE_PUBLICKEY);
-const unmintedItems = await getUnminted(connection, CANDY_MACHINE_PUBLICKEY);
 ```
 
 ## Note ✏️

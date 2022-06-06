@@ -89,7 +89,7 @@ describe("get", function () {
       );
     });
   });
-  describe("getUnminted", function () {
+  describe.skip("getUnminted", function () {
     it("should return unminted items", async function () {
       const mint = Keypair.generate();
 
