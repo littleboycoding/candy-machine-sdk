@@ -9,7 +9,7 @@ import {
 } from "@solana/web3.js";
 import candyMachineMock from "./mocks/candyMachineMock";
 
-import { getAll, getMinted, getUnminted } from "../src/get";
+import { getAll, getMinted, _getUnminted } from "../src/get";
 import { createMintTransaction } from "../src/transactions";
 import { expect } from "chai";
 
@@ -102,7 +102,7 @@ describe("get", function () {
 
       await sendAndConfirmTransaction(connection, transaction, [payer, mint]);
 
-      const items = await getUnminted(connection, candyMachine.publicKey);
+      const items = await _getUnminted(connection, candyMachine.publicKey);
 
       expect(items)
         .to.be.an("array")

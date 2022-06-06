@@ -11,7 +11,10 @@ import {
   CONFIG_LINE_SIZE_V2,
   MAX_NAME_LENGTH,
 } from "./constants";
-import { CandyMachine, ConfigLine } from "@metaplex-foundation/mpl-candy-machine";
+import {
+  CandyMachine,
+  ConfigLine,
+} from "@metaplex-foundation/mpl-candy-machine";
 
 /**
  * @private
@@ -30,8 +33,8 @@ function parseConfigLine(configLines: Buffer, start: number = 0): Item[] {
   }
 
   const splittedItems = items.map((item) => {
-    const name = item.slice(4, 4 + MAX_NAME_LENGTH)
-    const uri = item.slice(4 + MAX_NAME_LENGTH + 4)
+    const name = item.slice(4, 4 + MAX_NAME_LENGTH);
+    const uri = item.slice(4 + MAX_NAME_LENGTH + 4);
 
     return { name: name.toString(), uri: uri.toString() };
   });
@@ -90,9 +93,11 @@ async function getMinted(
  * @param connection - Connection instance
  * @param candyMachine - candy machine address
  *
+ * @experimental
+ *
  * @returns List of items
  */
-async function getUnminted(
+async function _getUnminted(
   connection: Connection,
   candyMachine: PublicKey
 ): Promise<Item[]> {
@@ -134,4 +139,4 @@ async function getAll(
   return items;
 }
 
-export { getUnminted, getMinted, getAll };
+export { _getUnminted, getMinted, getAll };
