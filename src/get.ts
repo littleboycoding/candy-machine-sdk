@@ -30,10 +30,10 @@ function parseConfigLine(configLines: Buffer, start: number = 0): Item[] {
   }
 
   const splittedItems = items.map((item) => {
-    const name = item.slice(4, 4 + MAX_NAME_LENGTH).toString();
-    const uri = item.slice(4 + MAX_NAME_LENGTH + 4).toString();
+    const name = item.slice(4, 4 + MAX_NAME_LENGTH)
+    const uri = item.slice(4 + MAX_NAME_LENGTH + 4)
 
-    return { name, uri };
+    return { name: name.toString(), uri: uri.toString() };
   });
 
   return splittedItems;
