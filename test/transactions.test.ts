@@ -11,8 +11,6 @@ import { createMintTransaction } from "../src/transactions";
 import candyMachineMock from "./mocks/candyMachineMock";
 import { expect } from "chai";
 
-import puppeteer, { Browser } from "puppeteer";
-
 describe("instructions", function () {
   const MINT_PRICE = LAMPORTS_PER_SOL;
   const ITEM_AVAILABLE = 1;
@@ -21,15 +19,9 @@ describe("instructions", function () {
   const seller = accounts[0];
   const buyer = accounts[1];
 
-  let browser: Browser;
-
   let candyMachine: Keypair;
 
   this.timeout(60000);
-
-  before(async function () {
-    browser = await puppeteer.launch();
-  });
 
   beforeEach(async function () {
     candyMachine = Keypair.generate();
@@ -61,8 +53,8 @@ describe("instructions", function () {
       const transaction = await createMintTransaction(
         connection,
         buyer.publicKey,
-        mint.publicKey,
-        candyMachine.publicKey
+        candyMachine.publicKey,
+        mint.publicKey
       );
 
       await sendAndConfirmTransaction(connection, transaction, [buyer, mint]);

@@ -16,7 +16,9 @@ export default {
     name: "candyMachine",
   },
   plugins: [
-    typescript(),
+    typescript({
+      module: "es2015",
+    }),
     commonjs({
       extensions: [".js", ".ts"],
     }),

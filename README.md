@@ -6,8 +6,8 @@ Compatible with both Node.js or web browser environment 🌍.
 
 ## Available API 📔
 
-- mint - Mint token
-- list - Show all NFT of candy machine
+- Minting token
+- Getting list of token from Candy machine
 
 ## Installation 📦
 
@@ -17,18 +17,36 @@ $ npm i candy-machine-sdk @solana/web3.js
 
 ## Examples 📚
 
+### Minting
+
 ```typescript
+import { Keypair, Connection, sendAndConfirmTransaction } from "@solana/web3.js";
 import { createMintTransaction, getMinted, getAll } from "candy-machine-sdk";
 
-// Minting
+const connection = new Connection();
+const mint = Keypair.generate();
+
 const transaction = await createMintTransaction(
   connection,
   PAYER_PUBLICKEY,
-  MINT_PUBLICKEY,
-  CANDY_MACHINE_PUBLICKEY
+  CANDY_MACHINE_PUBLICKEY,
+  mint.publickey
 );
 
-// Get list of token
+await sendAndConfirmTransaction(transaction, [PAYER_PUBLICKEY, mint]);
+
+const allItems = await getAll(connection, CANDY_MACHINE_PUBLICKEY);
+const mintedItems = await getMinted(connection, CANDY_MACHINE_PUBLICKEY);
+```
+
+### Getting token
+
+```typescript
+import { Keypair, Connection, sendAndConfirmTransaction } from "@solana/web3.js";
+import { getMinted, getAll } from "candy-machine-sdk";
+
+const connection = new Connection();
+
 const allItems = await getAll(connection, CANDY_MACHINE_PUBLICKEY);
 const mintedItems = await getMinted(connection, CANDY_MACHINE_PUBLICKEY);
 ```

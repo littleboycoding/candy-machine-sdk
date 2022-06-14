@@ -139,4 +139,4 @@ async function getAll(
   return items;
 }
 
-export { _getUnminted, getMinted, getAll };
+export { getMinted, getAll };

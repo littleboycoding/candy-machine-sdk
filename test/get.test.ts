@@ -6,7 +6,7 @@ import {
 } from "@solana/web3.js";
 import candyMachineMock from "./mocks/candyMachineMock";
 
-import { getAll, getMinted, _getUnminted } from "../src/get";
+import { getAll, getMinted } from "../src/get";
 import { createMintTransaction } from "../src/transactions";
 import { expect } from "chai";
 
@@ -54,8 +54,8 @@ describe("get", function () {
       const transaction = await createMintTransaction(
         connection,
         payer.publicKey,
-        mint.publicKey,
-        candyMachine.publicKey
+        candyMachine.publicKey,
+        mint.publicKey
       );
 
       await sendAndConfirmTransaction(connection, transaction, [payer, mint]);
@@ -73,25 +73,21 @@ describe("get", function () {
   });
   describe.skip("getUnminted", function () {
     it("should return unminted items", async function () {
-      const mint = Keypair.generate();
-
-      const transaction = await createMintTransaction(
-        connection,
-        payer.publicKey,
-        mint.publicKey,
-        candyMachine.publicKey
-      );
-
-      await sendAndConfirmTransaction(connection, transaction, [payer, mint]);
-
-      const items = await _getUnminted(connection, candyMachine.publicKey);
-
-      expect(items)
-        .to.be.an("array")
-        .and.have.lengthOf(ITEM_AVAILABLE - 1);
-      items.forEach((item) =>
-        expect(item).to.be.an("object").and.have.all.keys("name", "uri")
-      );
+      // const mint = Keypair.generate();
+      // const transaction = await createMintTransaction(
+      //   connection,
+      //   payer.publicKey,
+      //   candyMachine.publicKey,
+      // mint.publicKey
+      // );
+      // await sendAndConfirmTransaction(connection, transaction, [payer, mint]);
+      // const items = await _getUnminted(connection, candyMachine.publicKey);
+      // expect(items)
+      //   .to.be.an("array")
+      //   .and.have.lengthOf(ITEM_AVAILABLE - 1);
+      // items.forEach((item) =>
+      //   expect(item).to.be.an("object").and.have.all.keys("name", "uri")
+      // );
     });
   });
 });
