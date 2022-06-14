@@ -1,11 +1,11 @@
 {
   "name": "candy-machine-sdk",
-  "version": "0.1.2",
+  "version": "0.1.20",
   "description": "SDK to integrate candy machine to web3",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha ./test/*.test.ts",
-    "build": "tsc",
+    "build": "rollup -c",
     "prepare": "npm run build"
   },
   "keywords": [],
@@ -16,10 +16,17 @@
     "@metaplex-foundation/mpl-token-metadata": "^2.1.2",
     "@solana/spl-token": "^0.2.0",
     "@solana/web3.js": "^1.43.1",
+    "assert": "^2.0.0",
     "bn.js": "^5.2.1",
-    "node-fetch": "^2.6.7"
+    "buffer": "^6.0.3",
+    "node-fetch": "^2.6.7",
+    "process": "^0.11.10"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.3",
     "@types/bn.js": "^5.1.0",
     "@types/chai": "^4.3.1",
     "@types/mocha": "^9.1.1",
@@ -27,9 +34,15 @@
     "@types/node-fetch": "^2.6.1",
     "chai": "^4.3.6",
     "mocha": "^10.0.0",
-    "solana-test-validator-js": "^0.1.17",
+    "puppeteer": "^14.3.0",
+    "rollup": "^2.75.6",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-polyfill-node": "^0.9.0",
+    "solana-test-validator-js": "^1.0.1",
     "ts-node": "^10.8.0",
     "typescript": "^4.7.2"
   },
-  "files": ["dist"]
+  "files": [
+    "dist"
+  ]
 }
