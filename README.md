@@ -2,6 +2,8 @@
 
 This library provided simple & opinionated API to interact with on-chain metaplex's candy machine, The goal is to make it easiser to integrate candy machine with any web or app.
 
+Compatible with both Node.js or web browser environment 🌍.
+
 ## Available API 📔
 
 - mint - Mint token
@@ -10,7 +12,7 @@ This library provided simple & opinionated API to interact with on-chain metaple
 ## Installation 📦
 
 ```sh
-$ npm i candy-machine-sdk
+$ npm i candy-machine-sdk @solana/web3.js
 ```
 
 ## Examples 📚
