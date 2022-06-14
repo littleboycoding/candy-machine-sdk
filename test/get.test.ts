@@ -1,8 +1,5 @@
-import { PROGRAM_ID as CANDY_MACHINE_PROGRAM_ID } from "@metaplex-foundation/mpl-candy-machine";
-import { PROGRAM_ID as TOKEN_METADATA_PROGRAM_ID } from "@metaplex-foundation/mpl-token-metadata";
-import { Cleanup, startSolanaTestValidator } from "solana-test-validator-js";
+import { connection, getAccounts } from "solana-test-validator-js";
 import {
-  Connection,
   Keypair,
   LAMPORTS_PER_SOL,
   sendAndConfirmTransaction,
@@ -17,23 +14,12 @@ describe("get", function () {
   const MINT_PRICE = LAMPORTS_PER_SOL;
   const ITEM_AVAILABLE = 3;
 
-  let connection: Connection;
-  let cleanup: Cleanup;
-  let payer: Keypair;
+  const accounts = getAccounts(2);
+  const payer = accounts[0];
+
   let candyMachine: Keypair;
 
   this.timeout(60000);
-
-  before(async function () {
-    [connection, [payer], cleanup] = await startSolanaTestValidator([
-      "--bpf-program",
-      CANDY_MACHINE_PROGRAM_ID,
-      "test/mocks/mpl/candy_machine.so",
-      "--bpf-program",
-      TOKEN_METADATA_PROGRAM_ID,
-      "test/mocks/mpl/token_metadata.so",
-    ]);
-  });
 
   beforeEach(async function () {
     candyMachine = Keypair.generate();
@@ -49,10 +35,6 @@ describe("get", function () {
         itemsAvailable: ITEM_AVAILABLE,
       }
     );
-  });
-
-  after(function () {
-    cleanup();
   });
 
   describe("getAll", function () {

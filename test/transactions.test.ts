@@ -1,12 +1,9 @@
-import { PROGRAM_ID as CANDY_MACHINE_PROGRAM_ID } from "@metaplex-foundation/mpl-candy-machine";
-import { PROGRAM_ID as TOKEN_METADATA_PROGRAM_ID } from "@metaplex-foundation/mpl-token-metadata";
 import {
-  Connection,
   Keypair,
   LAMPORTS_PER_SOL,
   sendAndConfirmTransaction,
 } from "@solana/web3.js";
-import { Cleanup, startSolanaTestValidator } from "solana-test-validator-js";
+import { connection, getAccounts } from "solana-test-validator-js";
 import { getAssociatedTokenAddress, getMint } from "@solana/spl-token";
 
 import { createMintTransaction } from "../src/transactions";
@@ -14,35 +11,24 @@ import { createMintTransaction } from "../src/transactions";
 import candyMachineMock from "./mocks/candyMachineMock";
 import { expect } from "chai";
 
+import puppeteer, { Browser } from "puppeteer";
+
 describe("instructions", function () {
   const MINT_PRICE = LAMPORTS_PER_SOL;
   const ITEM_AVAILABLE = 1;
 
-  let connection: Connection;
-  let seller: Keypair;
-  let buyer: Keypair;
+  const accounts = getAccounts(2);
+  const seller = accounts[0];
+  const buyer = accounts[1];
+
+  let browser: Browser;
+
   let candyMachine: Keypair;
-  let cleanup: Cleanup;
 
   this.timeout(60000);
 
   before(async function () {
-    [connection, [seller, buyer], cleanup] = await startSolanaTestValidator(
-      [
-        "--bpf-program",
-        CANDY_MACHINE_PROGRAM_ID,
-        "test/mocks/mpl/candy_machine.so",
-        "--bpf-program",
-        TOKEN_METADATA_PROGRAM_ID,
-        "test/mocks/mpl/token_metadata.so",
-      ],
-      {
-        accounts: {
-          number: 2,
-          lamports: LAMPORTS_PER_SOL * 10000,
-        },
-      }
-    );
+    browser = await puppeteer.launch();
   });
 
   beforeEach(async function () {
@@ -61,10 +47,6 @@ describe("instructions", function () {
     );
   });
 
-  after(function () {
-    cleanup();
-  });
-
   describe("createMintInstruction", function () {
     it("should be able to mint", async function () {
       const mint = Keypair.generate();
@@ -80,7 +62,7 @@ describe("instructions", function () {
         connection,
         buyer.publicKey,
         mint.publicKey,
-        candyMachine.publicKey,
+        candyMachine.publicKey
       );
 
       await sendAndConfirmTransaction(connection, transaction, [buyer, mint]);
