@@ -49,6 +49,7 @@ async function candyMachineMock(
   }
 ) {
   const transaction = new Transaction();
+  const liveDate = new BN(Date.now() / 1000);
 
   const data: CandyMachineData = {
     uuid: candyMachine.publicKey.toBase58().slice(0, 6),
@@ -68,7 +69,7 @@ async function candyMachineMock(
     retainAuthority: true,
     gatekeeper: null,
     hiddenSettings: null,
-    goLiveDate: 0,
+    goLiveDate: liveDate,
     endSettings: null,
     whitelistMintSettings: null,
   };
@@ -144,6 +145,10 @@ async function candyMachineMock(
   // transaction.add(
   //   createSetCollectionInstruction()
   // );
+
+  return {
+    liveDate,
+  };
 }
 
 export default candyMachineMock;

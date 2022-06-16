@@ -63,12 +63,7 @@ describe("get", function () {
       const items = await getMinted(connection, candyMachine.publicKey);
 
       expect(items).to.be.an("array").and.have.lengthOf(1);
-      expect(items[0])
-        .to.be.an("object")
-        .and.have.all.keys("name", "uri", "metadata");
-      expect(items[0].metadata?.mint.toBase58()).to.equal(
-        mint.publicKey.toBase58()
-      );
+      expect(items[0]).to.be.an("object").and.have.all.keys("name", "uri");
     });
   });
   describe.skip("getUnminted", function () {

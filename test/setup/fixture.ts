@@ -27,5 +27,5 @@ export async function mochaGlobalSetup(this: Mocha.Context) {
 }
 
 export function mochaGlobalTeardown(this: Mocha.Context) {
-  if (this.cleanup) this.cleanup();
+  this.cleanup?.();
 }

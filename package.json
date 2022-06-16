@@ -1,6 +1,6 @@
 {
   "name": "candy-machine-sdk",
-  "version": "0.1.21",
+  "version": "0.1.23",
   "description": "SDK to integrate candy machine to web3",
   "main": "dist/index.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "assert": "^2.0.0",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
+    "mobx": "^6.6.0",
     "node-fetch": "^2.6.7",
     "process": "^0.11.10"
   },

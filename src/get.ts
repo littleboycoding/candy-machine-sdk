@@ -16,6 +16,8 @@ import {
   ConfigLine,
 } from "@metaplex-foundation/mpl-candy-machine";
 
+export type Item = ConfigLine;
+
 /**
  * @private
  */
@@ -42,8 +44,6 @@ function parseConfigLine(configLines: Buffer, start: number = 0): Item[] {
   return splittedItems;
 }
 
-type Item = ConfigLine & { metadata?: Metadata };
-
 /**
  * Get all minted from candy machine
  *
@@ -60,7 +60,6 @@ async function getMinted(
   const metadataAccounts = await connection.getProgramAccounts(
     TOKEN_METADATA_PROGRAM_ID,
     {
-      // dataSlice: { offset: 33, length: 32 },
       filters: [
         { dataSize: MAX_METADATA_LEN },
 
@@ -80,7 +79,6 @@ async function getMinted(
     return {
       name: metadata.data.name,
       uri: metadata.data.uri,
-      metadata: metadata,
     };
   });
 
